@@ -1,11 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+<style>
+    p{
+        margin-top: 0 !important;
+        margin-bottom: 1rem !important;
+        font-size: 1.1rem;
+    }
+    figure{
+        margin: 0 !important;
+    }
+    pre{
+        padding: 0 !important;
+        margin-top: 0 !important;
+        margin-bottom: 1rem !important;
+    }
+
+    td{
+        padding: 0 !important;
+        margin-bottom: 1rem !important;
+    }
+    h1,h2,h3,h4,h5,h6{
+        margin-top: 0 !important;
+        margin-bottom: 1rem !important;
+    }
+    @media (min-width: 1024px) {
+        #middle-box{
+            min-width: 56rem;
+        }
+    
+    }
+</style>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DQI_king - Archives</title>
+    <title>DQI_king - The Zynq book读书笔记（1） - 初见the zynq</title>
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/tailwind.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/toc.css">
     
 <header class="bg-black text-hacker-white py-4 font-dos font-extrabold">
     <div class="container mx-auto flex items-center justify-between space-x-8">
@@ -134,175 +166,45 @@
   
 
 <meta name="generator" content="Hexo 7.3.0"></head>
-<body class="bg-black container mx-auto">
-    <h1 class="text-4xl text-hacker-color1 font-bold font-dos">Archives</h1>
-    <hr class="w-full border-t-2 border-line-color border-dashed">
-    <div class="container mx-auto flex bg-black min-h-screen">
-        <div class="w-full">
-            
+<body class="bg-black text-hacker-color3 container mx-auto" style="overflow-x:hidden">
+    <!-- 文章标题 -->
+    <h1 class="text-5xl text-hacker-color1 font-bold font-dos my-6 text-center">The Zynq book读书笔记（1） - 初见the zynq</h1>
 
-            <div class="archive-list text-lg mt-8">
-            
-                <section class="mb-6">
-                <h2 class="text-2xl font-bold text-hacker-color1 mb-4">2023</h2>
-                <ul class="ml-4">
-                    
-                    <li class="mb-2">
-                        <span class="text-hacker-color3 ">2023-11-20 >> </span>
-                        <a class="text-hacker-color1 hover:underline" href="/2023/11/20/life/weekend-hiking/">周末爬山</a>
-                    </li>
-                    
-                </ul>
-                </section>
-            
-            </div>
+    <!-- 发布时间 -->
+    <p class="text-hacker-color3 text-center text-sm mb-4">
+        2025-08-17
+    </p>
 
-
+    <!-- 文章内容 -->
+    <div id="article-content" class="article-entry prose prose-invert mx-auto max-w-4xl leading-relaxed highlight" style="display: flex;">
+        <div id="middle-box">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>工作过程中遇到了很多关于ZYNQ的问题，但是由于工作时间的关系，一直没有时间去系统性的学习ZYNQ（包含PL和PS，PL指的是FPGA的硬件部分，PS则是arm架构的处理器部分），只是应项目需求选择性的学习部分知识然后赶鸭子上架的去解决问题，在这个过程中也是看到了ZYNQ的灵活，可扩展性，作为一个开发者而言第一次发现这个平台时是非常兴奋的，我坚信它能够帮助我加速产品开发，推动技术创新。而最近刚好看到了一本关于FPGA的书——the zynq book，所以就买了下来，打算系统的学习一下ZYNQ平台，并记录在此，一方面可以时长温习，另一方面也是促使我将此书踏实学完的一个动力所在。</p>
+<h1 id="一、引言"><a href="#一、引言" class="headerlink" title="一、引言"></a>一、引言</h1><p> Zynq 的本质特征，是它组合了一个双核ARM Cortex-A9处理器和一个传统的现场可编程门阵列，值得注意的是ARM Cortex-A9处理器可以运行完整的像linux这样的操作系统，而FPGA则可以运行硬件描述语言（HDL），这使得Zynq成为了一个非常强大的平台，它可以同时运行软件和硬件，是一个非常适合于嵌入式系统的平台（软硬通吃！！！）。</p>
+<h2 id="1-1-ZYNQ的片上系统（SOC）"><a href="#1-1-ZYNQ的片上系统（SOC）" class="headerlink" title="1.1 ZYNQ的片上系统（SOC）"></a>1.1 ZYNQ的片上系统（SOC）</h2><p> 以前的SOC常用于专用集成芯片（ASIC），这个东西开发后无法重复使用只能用于那个特定的地方，比如PC和手机的CPU，这种基于ASIC的SOC只能说用在大量需求，硬件层面长时间不用升级的地方和基于FPGA的SOC相比能够凸显优势。基于ASIC的SoC的局限性导致它们不适用于很多应用，特别是当快速投入市场能力、灵活性和升级能力已经成为重要的关键因素时。</p>
+<p> 现在ZYNQ提供了更理想的用于实现灵活的SoC 的平台：Xilinx 将其包装成全可编程SoC（All-Programmable SoC，APSoC）”，这个词完美地阐述了它的能力。还是那句话软硬通吃！！！对于ZYNQ，这里再提醒一下加深映像，ZYNQ的PL部分用来实现高速逻辑、算术和数据流子系统，而PS部分则支持软件程序或操作系统。它们会在后面的章节中详细介绍。</p>
+<h2 id="1-2-嵌入式SOC的简单剖析"><a href="#1-2-嵌入式SOC的简单剖析" class="headerlink" title="1.2 嵌入式SOC的简单剖析"></a>1.2 嵌入式SOC的简单剖析</h2>
         </div>
         
-    <div class="w-1/3 hidden md:block space-y-4 mt-8">
-      
+            <div class="post-container">
+            <aside class="toc-container">
+                <button class="toc-toggle">文章目录</button>
+                <nav class="toc" id="toc"></nav>
+            </aside>
+        </div>
         
-          <!-- 搜索框 -->
-          <input type="text" id="search-input" placeholder="Search..." class="w-full p-2.5 text-lg mb-5 border-2 border-line-color rounded bg-black text-white placeholder-gray-400"/>
-          <div id="search-results"></div>
-        
-  
-        
-  
-        
-  
-        
-  
-        
-  
-      
-        
-  
-        
-          <!-- 公告栏 -->
-          <div class=" text-white p-4 rounded-md border-2 border-dashed border-line-color mb-4">
-            <h3 class="font-bold text-lg text-hacker-color1">Notice</h3>
-            <p class="mt-4">笨蛋奇奇欢迎你，技术交流请加Q群：531935896</p>
-          </div>
-        
-  
-        
-  
-        
-  
-        
-  
-      
-        
-  
-        
-  
-        
-          <!-- 分类部分 -->
-          <h3 class="text-hacker-color1 font-bold text-lg">Categories</h3>
-          <div>
-            
-            
-          </div>
-          <hr class="w-full border-t-2 border-line-color border-dashed">
-        
-  
-        
-  
-        
-  
-      
-        
-  
-        
-  
-        
-  
-        
-          <!-- 标签部分 -->
-          <h3 class="text-hacker-color1 font-bold text-lg">Tags</h3>
-          <div class="flex flex-wrap justify-start items-center">
-            
-              <a href="http://example.com/tags/证件照/" class="text-hacker-color3 hover:bg-hacker-hover-color hover:text-white block border border-hacker-color3 hover:border-dotted rounded-sm py-0.5 px-2 mr-4 mb-2">
-                证件照 <sub>1</sub>
-              </a>
-              <br />
-            
-              <a href="http://example.com/tags/户外/" class="text-hacker-color3 hover:bg-hacker-hover-color hover:text-white block border border-hacker-color3 hover:border-dotted rounded-sm py-0.5 px-2 mr-4 mb-2">
-                户外 <sub>1</sub>
-              </a>
-              <br />
-            
-              <a href="http://example.com/tags/运动/" class="text-hacker-color3 hover:bg-hacker-hover-color hover:text-white block border border-hacker-color3 hover:border-dotted rounded-sm py-0.5 px-2 mr-4 mb-2">
-                运动 <sub>1</sub>
-              </a>
-              <br />
-            
-              <a href="http://example.com/tags/北京/" class="text-hacker-color3 hover:bg-hacker-hover-color hover:text-white block border border-hacker-color3 hover:border-dotted rounded-sm py-0.5 px-2 mr-4 mb-2">
-                北京 <sub>1</sub>
-              </a>
-              <br />
-            
-            
-          </div>
-          <hr class="w-full border-t-2 border-line-color border-dashed">
-        
-  
-        
-  
-      
-        
-  
-        
-  
-        
-  
-        
-  
-        
-          <!-- 链接部分 -->
-          <h3 class="text-hacker-color1 font-bold text-lg">Links</h3>
-          <div>
-            
-              <a href="https://space.bilibili.com/475237972?spm_id_from=333.337.0.0" target="_blank" class="text-hacker-color3 hover:text-white">
-                b站主页
-              </a>
-              <br />
-            
-              <a href="https://github.com/DQI-king?tab=repositories" target="_blank" class="text-hacker-color3 hover:text-white">
-                github主页
-              </a>
-              <br />
-            
-              <a href="mailto:0x310ct@gmail.com" target="_blank" class="text-hacker-color3 hover:text-white">
-                电子邮箱
-              </a>
-              <br />
-            
-              <a href="https://blog.csdn.net/2404_89853580?type=blog" target="_blank" class="text-hacker-color3 hover:text-white">
-                CSDN主页
-              </a>
-              <br />
-            
-          </div>
-          <hr class="w-full border-t-2 border-line-color border-dashed">
-        
-  
-      
     </div>
-  
-  
-  
-  
-  
 
 
-
-
-
-
+    <!-- 返回主页链接 -->
+    <div class="text-center my-8">
+        <a href="/" class="text-hacker-color1 underline hover:text-hacker-color2">← Back to Home</a>
     </div>
+
+      
+      <script src="/js/toc.js"></script>  <!-- 引入 TOC 逻辑 -->
+      
+      
+
     <footer class="bg-black text-gray-400 py-4">
     <div class="container mx-auto text-center">
       <p>© <span id="current-year"></span>  邓奇 
@@ -314,6 +216,7 @@
     document.getElementById("current-year").textContent = new Date().getFullYear();
   </script>
   
+
 
 </body>
 </html>
